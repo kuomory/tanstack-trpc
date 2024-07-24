@@ -13,7 +13,7 @@ import { useForm } from "@tanstack/react-form";
 import { zodValidator } from "@tanstack/zod-form-adapter";
 import { z } from "zod";
 import { IconCancel, IconUserPlus } from "@tabler/icons-react";
-import { trpc, trpcClient } from "../utils/trpc";
+import { trpc } from "../utils/trpc";
 
 export const Route = createFileRoute("/users/new")({
   component: Page,
