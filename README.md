@@ -13,7 +13,7 @@ monorepoでSPAのWebアプリケーションを作成するテンプレート
 7. `pnpm dev` で実行
 8. [http://localhost:5173](http://localhost:5173)で閲覧
 
-※ 4より先に5を実行してしまった場合、4を実行してからVSCode上で Ctrl + Shift + P を押して
+※ 4より先に5を実行してしまった場合、4を実行してからVSCode上で Ctrl + Shift + P を押して  
 　 「開発コンテナー: キャッシュなしのコンテナーのリビルド」を実行
 
 ## 概要
