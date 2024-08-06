@@ -11,7 +11,10 @@
   "scripts": {
     "web": "pnpm -F \"web\"",
     "api": "pnpm -F \"api\"",
-    "dev": "pnpm --parallel -F \"./**\" dev"
+    "dev": "pnpm --parallel -F \"./**\" dev",
+    "build": "pnpm --parallel -F \"./**\" build",
+    "start": "pnpm --parallel -F \"./**\" start",
+    "typecheck": "pnpm --parallel -F \"./**\" typecheck"
   },
   "keywords": [],
   "author": "",

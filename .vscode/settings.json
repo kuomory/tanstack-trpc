@@ -1,7 +1,8 @@
 {
   "cSpell.words": [
     "devcontainer",
-    "tanstack"
+    "tanstack",
+    "typecheck"
   ],
   "typescript.preferences.importModuleSpecifier": "relative"
 }
