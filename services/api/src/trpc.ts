@@ -1,9 +1,12 @@
 import { initTRPC } from "@trpc/server";
 import superjson from "superjson";
 
-const t = initTRPC.create({
+const {
+  router,
+  procedure: publicProcedure,
+  createCallerFactory,
+} = initTRPC.create({
   transformer: superjson,
 });
 
-export const router = t.router;
-export const publicProcedure = t.procedure;
+export { router, publicProcedure, createCallerFactory };

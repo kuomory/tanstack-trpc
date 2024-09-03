@@ -29,7 +29,7 @@ function Page() {
     },
     onError: (error) => {
       const errorData = JSON.parse(error.message);
-      alert(errorData.map((err: any) => err.message));
+      alert(errorData.map((err: Error) => err.message));
     },
   });
   const form = useForm({

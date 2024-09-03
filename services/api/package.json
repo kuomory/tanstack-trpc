@@ -9,7 +9,11 @@
     "build": "tsc -p tsconfig.build.json",
     "start": "node dist/src/index.js",
     "typecheck": "tsc --noEmit",
-    "db:reset": "prisma generate && prisma migrate reset -f && prisma migrate dev --name init && tsx prisma/seeds/init.ts"
+    "lint": "eslint src --report-unused-disable-directives --max-warnings 0",
+    "vitest": "vitest",
+    "test": "pnpm typecheck && pnpm lint && pnpm vitest",
+    "db:reset": "prisma generate && prisma migrate reset -f && prisma migrate dev --name init && tsx prisma/seeds/init.ts",
+    "db:studio": "prisma studio"
   },
   "keywords": [],
   "author": "",
@@ -26,8 +30,13 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@eslint/js": "^9.9.1",
     "@types/node": "^20.14.11",
+    "eslint": "^8.57.0",
+    "globals": "^15.9.0",
     "tsx": "^4.16.2",
-    "typescript": "^5.5.2"
+    "typescript": "^5.5.2",
+    "typescript-eslint": "^8.4.0",
+    "vitest": "^2.0.5"
   }
 }

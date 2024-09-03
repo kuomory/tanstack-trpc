@@ -36,8 +36,8 @@ function About() {
           <text
             x="50%"
             y="50%"
-            dominant-baseline="middle"
-            text-anchor="middle"
+            dominantBaseline="middle"
+            textAnchor="middle"
             fontSize={735}
             fontFamily="Helvetica"
             fill="black"
@@ -49,8 +49,8 @@ function About() {
           <text
             x="50%"
             y="16%"
-            dominant-baseline="middle"
-            text-anchor="middle"
+            dominantBaseline="middle"
+            textAnchor="middle"
             fontSize={110}
             fontFamily="Helvetica"
             transform="scale(1, 2)"
@@ -62,8 +62,8 @@ function About() {
           <text
             x="50%"
             y="38%"
-            dominant-baseline="middle"
-            text-anchor="middle"
+            dominantBaseline="middle"
+            textAnchor="middle"
             fontSize={110}
             fontFamily="Helvetica"
             transform="scale(1, 2)"

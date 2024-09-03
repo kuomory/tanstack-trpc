@@ -4,25 +4,23 @@ import {
   Outlet,
   useLocation,
 } from "@tanstack/react-router";
-import { queryClient } from "./__root";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { AppShell, Button, Container, Stack } from "@mantine/core";
 import { IconUserPlus } from "@tabler/icons-react";
 import { getQueryKey } from "@trpc/react-query";
 import { UserCard } from "../components/UserCard";
 import { trpc, trpcClient } from "../utils/trpc";
+import { queryClient } from "../utils/queryClient";
 
 const usersQueryOptions = queryOptions({
   queryKey: getQueryKey(trpc.users.getUsers),
   queryFn: () => trpcClient.users.getUsers.query(),
 });
 
-export const usersRouteOption = {
+export const Route = createFileRoute("/users")({
   loader: () => queryClient.ensureQueryData(usersQueryOptions),
   component: Page,
-};
-
-export const Route = createFileRoute("/users")(usersRouteOption);
+});
 
 function Page() {
   const usersData = useSuspenseQuery(usersQueryOptions);

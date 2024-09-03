@@ -13,13 +13,19 @@
     "api": "pnpm -F \"api\"",
     "dev": "pnpm --parallel -F \"./**\" dev",
     "build": "pnpm --parallel -F \"./**\" build",
-    "start": "pnpm --parallel -F \"./**\" start",
-    "typecheck": "pnpm --parallel -F \"./**\" typecheck"
+    "typecheck": "pnpm --parallel -F \"./**\" typecheck",
+    "lint": "pnpm --parallel -F \"./**\" lint",
+    "vitest": "vitest",
+    "test": "pnpm typecheck && pnpm lint && pnpm vitest",
+    "start": "pnpm --parallel -F \"./**\" start"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "workspaces": [
     "services/*"
-  ]
+  ],
+  "devDependencies": {
+    "vitest": "^2.0.5"
+  }
 }

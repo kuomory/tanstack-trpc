@@ -1,7 +1,6 @@
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
 import { trpc, trpcClient } from "../utils/trpc";
-import { queryClient } from "./__root";
 import {
   ActionIcon,
   AppShell,
@@ -25,6 +24,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { useForm } from "@tanstack/react-form";
 import { z } from "zod";
 import { zodValidator } from "@tanstack/zod-form-adapter";
+import { queryClient } from "../utils/queryClient";
 
 const getUserQueryOptions = (userId: string) =>
   queryOptions({
@@ -58,7 +58,7 @@ function Page() {
     },
     onError: (error) => {
       const errorData = JSON.parse(error.message);
-      alert(errorData.map((err: any) => err.message));
+      alert(errorData.map((err: Error) => err.message));
     },
   });
   const [editing, { open, close }] = useDisclosure(false);
