@@ -12,6 +12,7 @@
         },
         "vscode": {
             "extensions": [
+                "donjayamanne.githistory",
                 "GitLab.gitlab-workflow",
                 "ms-azuretools.vscode-docker",
                 "Prisma.prisma",
