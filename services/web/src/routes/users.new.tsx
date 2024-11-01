@@ -9,15 +9,22 @@ import {
   Title,
 } from "@mantine/core";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
-import { useForm } from "@tanstack/react-form";
-import { zodValidator } from "@tanstack/zod-form-adapter";
 import { z } from "zod";
 import { IconCancel, IconUserPlus } from "@tabler/icons-react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useCallback } from "react";
 import { trpc } from "../utils/trpc";
 
 export const Route = createFileRoute("/users/new")({
   component: Page,
 });
+
+const formSchema = z.object({
+  name: z.string().min(3, "Name must be at least 3 characters"),
+  bio: z.string().nullable(),
+});
+type FormSchema = z.infer<typeof formSchema>;
 
 function Page() {
   const router = useRouter();
@@ -32,19 +39,26 @@ function Page() {
       alert(errorData.map((err: Error) => err.message));
     },
   });
-  const form = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormSchema>({
     defaultValues: {
       name: "",
       bio: "",
     },
-    onSubmit: (values) => {
+    resolver: zodResolver(formSchema),
+  });
+  const onValid: SubmitHandler<FormSchema> = useCallback(
+    (values) => {
       userCreator.mutate({
-        name: values.value.name,
-        bio: values.value.bio,
+        name: values.name,
+        bio: values.bio,
       });
     },
-    validatorAdapter: zodValidator(),
-  });
+    [userCreator]
+  );
   return (
     <>
       <AppShell.Aside p="md">
@@ -52,48 +66,17 @@ function Page() {
           Create new user
         </Title>
         <Divider my="md" />
-        <Stack
-          component="form"
-          onSubmit={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            form.handleSubmit();
-          }}
-        >
+        <Stack component="form" onSubmit={handleSubmit(onValid)}>
           <Stack gap={4}>
-            <form.Field
-              name="name"
-              validators={{
-                onChange: z
-                  .string()
-                  .min(3, "Name must be at least 3 characters"),
-              }}
-              children={(field) => (
-                <TextInput
-                  label="name"
-                  name={field.name}
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => {
-                    field.handleChange(e.target.value);
-                  }}
-                  error={field.state.meta.errors.join(",")}
-                />
-              )}
+            <TextInput
+              {...register("name")}
+              label="name"
+              error={errors.name?.message}
             />
-            <form.Field
-              name="bio"
-              children={(field) => (
-                <Textarea
-                  label="bio"
-                  name={field.name}
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => {
-                    field.handleChange(e.target.value);
-                  }}
-                />
-              )}
+            <Textarea
+              {...register("bio")}
+              label="bio"
+              error={errors.bio?.message}
             />
           </Stack>
           <Group justify="flex-end">

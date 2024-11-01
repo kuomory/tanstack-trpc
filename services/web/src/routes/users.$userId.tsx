@@ -21,10 +21,13 @@ import {
   IconTrash,
 } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
-import { useForm } from "@tanstack/react-form";
 import { z } from "zod";
-import { zodValidator } from "@tanstack/zod-form-adapter";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useCallback } from "react";
 import { queryClient } from "../utils/queryClient";
+import UserDetails from "../components/UserDetails";
+import UserEditor from "../components/UserEditor";
 
 const getUserQueryOptions = (userId: string) =>
   queryOptions({
@@ -50,130 +53,30 @@ function Page() {
       utils.users.getUsers.invalidate();
     },
   });
-  const userUpdater = trpc.users.updateUser.useMutation({
-    onSuccess: () => {
-      utils.users.getUsers.invalidate();
-      utils.invalidate(undefined, { queryKey: [userId] });
-      close();
-    },
-    onError: (error) => {
-      const errorData = JSON.parse(error.message);
-      alert(errorData.map((err: Error) => err.message));
-    },
-  });
-  const [editing, { open, close }] = useDisclosure(false);
-  const form = useForm({
-    defaultValues: {
-      name: user?.name ?? "",
-      bio: user?.bio ?? "",
-    },
-    onSubmit: (values) => {
-      userUpdater.mutate({
-        id: userId,
-        name: values.value.name,
-        bio: values.value.bio,
-      });
-    },
-    validatorAdapter: zodValidator(),
-  });
+
+  const [isEditing, { open: edit, close: back }] = useDisclosure(false);
   if (!user) {
     redirect({ to: "/users" });
     return null;
   }
+
+  const handleDelete = useCallback(() => {
+    userDeleter.mutate(user.id);
+  }, [userDeleter, user.id]);
+
   return (
     <>
       <AppShell.Aside p="md">
-        <Stack
-          component="form"
-          onSubmit={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            form.handleSubmit();
-          }}
-        >
-          {editing ? (
-            <Stack gap={4}>
-              <form.Field
-                name="name"
-                validators={{
-                  onChange: z
-                    .string()
-                    .min(3, "Name must be at least 3 characters"),
-                }}
-                children={(field) => (
-                  <TextInput
-                    label="name"
-                    name={field.name}
-                    value={field.state.value}
-                    onBlur={field.handleBlur}
-                    onChange={(e) => {
-                      field.handleChange(e.target.value);
-                    }}
-                    error={field.state.meta.errors.join(",")}
-                  />
-                )}
-              />
-              <form.Field
-                name="bio"
-                children={(field) => (
-                  <Textarea
-                    label="bio"
-                    name={field.name}
-                    value={field.state.value}
-                    onBlur={field.handleBlur}
-                    onChange={(e) => {
-                      field.handleChange(e.target.value);
-                    }}
-                  />
-                )}
-              />
-            </Stack>
-          ) : (
-            <Stack gap={4}>
-              <Group justify="space-between">
-                <Title fw="normal">{user.name}</Title>
-                <CloseButton
-                  onClick={() => {
-                    router.navigate({ to: "/" });
-                  }}
-                />
-              </Group>
-              <Text style={{ whiteSpace: "pre-wrap" }}>{user.bio}</Text>
-            </Stack>
-          )}
-          <Group>
-            {editing ? (
-              <>
-                <Tooltip label="Done">
-                  <ActionIcon variant="tertiary" type="submit">
-                    <IconCheck />
-                  </ActionIcon>
-                </Tooltip>
-                <Tooltip label="Cancel">
-                  <ActionIcon variant="tertiary" onClick={close}>
-                    <IconCancel />
-                  </ActionIcon>
-                </Tooltip>
-              </>
-            ) : (
-              <Tooltip label="Edit">
-                <ActionIcon variant="tertiary" onClick={open}>
-                  <IconEdit />
-                </ActionIcon>
-              </Tooltip>
-            )}
-            <Tooltip label="Delete">
-              <ActionIcon
-                variant="danger-outline"
-                onClick={() => {
-                  userDeleter.mutate(userId);
-                }}
-              >
-                <IconTrash />
-              </ActionIcon>
-            </Tooltip>
-          </Group>
-        </Stack>
+        {isEditing ? (
+          <UserEditor
+            key={userId}
+            user={user}
+            back={back}
+            onDelete={handleDelete}
+          />
+        ) : (
+          <UserDetails user={user} edit={edit} onDelete={handleDelete} />
+        )}
       </AppShell.Aside>
     </>
   );
