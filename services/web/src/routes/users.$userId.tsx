@@ -1,29 +1,9 @@
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
 import { trpc, trpcClient } from "../utils/trpc";
-import {
-  ActionIcon,
-  AppShell,
-  CloseButton,
-  Group,
-  Stack,
-  Text,
-  Textarea,
-  TextInput,
-  Title,
-  Tooltip,
-} from "@mantine/core";
+import { AppShell } from "@mantine/core";
 import { getQueryKey } from "@trpc/react-query";
-import {
-  IconCancel,
-  IconCheck,
-  IconEdit,
-  IconTrash,
-} from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
-import { z } from "zod";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useCallback } from "react";
 import { queryClient } from "../utils/queryClient";
 import UserDetails from "../components/UserDetails";
