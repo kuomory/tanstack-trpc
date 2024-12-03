@@ -1,0 +1,50 @@
+{
+  // IntelliSense を使用して利用可能な属性を学べます。
+  // 既存の属性の説明をホバーして表示します。
+  // 詳細情報は次を確認してください: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "プログラムの起動",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "dev"
+      ],
+      "console": "integratedTerminal"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "データベース初期化",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "api",
+        "db:reset"
+      ],
+      "console": "integratedTerminal"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "データベースマイグレーション",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "api",
+        "db:migrate"
+      ],
+      "console": "integratedTerminal"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "テスト実行",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "test"
+      ],
+      "console": "integratedTerminal"
+    }
+  ]
+}

@@ -12,6 +12,7 @@
   "include": [
     "src",
     "prisma",
-    "test"
+    "test",
+    "./build.ts"
   ]
 }

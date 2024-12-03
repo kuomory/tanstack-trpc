@@ -13,8 +13,11 @@
     "api": "pnpm -F \"api\"",
     "dev": "pnpm --parallel -F \"./**\" dev",
     "build": "pnpm --parallel -F \"./**\" build",
+    "clean": "pnpm --parallel -F \"./**\" clean && rm -rf ./node_modules && rm -rf ./pnpm-store",
     "typecheck": "pnpm --parallel -F \"./**\" typecheck",
     "lint": "pnpm --parallel -F \"./**\" lint",
+    "format": "pnpm prettier --check .",
+    "format:write": "pnpm prettier --write .",
     "vitest": "vitest",
     "test": "pnpm typecheck && pnpm lint && pnpm vitest",
     "start": "pnpm --parallel -F \"./**\" start"
@@ -26,6 +29,7 @@
     "services/*"
   ],
   "devDependencies": {
+    "prettier": "^3.4.1",
     "vitest": "^2.0.5"
   }
 }

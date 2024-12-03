@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "clean": "rm -rf ./node_modules && rm -rf ./dist",
     "start": "vite preview",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src --report-unused-disable-directives --max-warnings 0",
